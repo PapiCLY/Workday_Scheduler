@@ -2,6 +2,16 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 let saveButton = $('.btn')
+let currentDay = $('#currentDay')
+
+function showTime(){
+  let currentTime =  dayjs().format('MMM DD, YYYY [a] hh:mm:ss a')
+currentDay.text(currentTime)
+};
+
+setInterval(function(){
+  showTime()
+}, 1000)
 
 function saveDates() {
   
@@ -29,3 +39,4 @@ function saveDates() {
   // TODO: Add code to display the current date in the header of the page.
 
   saveButton.on('click', saveDates)
+showTime()
