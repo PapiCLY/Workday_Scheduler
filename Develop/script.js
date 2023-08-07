@@ -1,7 +1,6 @@
   // ````// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-let saveButton = $('.btn')
 let currentDay = $('#currentDay')
 
 //Show time on top of page and using setInterval() to show the seconds
@@ -15,10 +14,6 @@ setInterval(function(){
 }, 1000)
 
 
-//Save event to calendar using localstorage
-function saveDates() {
-  
-};
 
 
 
@@ -41,5 +36,5 @@ function saveDates() {
   //
   // TODO: Add code to display the current date in the header of the page.
 
-  saveButton.on('click', saveDates)
+
 showTime()
