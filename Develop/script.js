@@ -1,23 +1,69 @@
   // ````// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-let currentDay = $('#currentDay')
+$(document).ready(function() {
+  let currentDay = $('#currentDay');
+  let timeBlocks = $('.time-block');
 
-//Show time on top of page and using setInterval() to show the seconds
-function showTime(){
-  let currentTime =  dayjs().format('MMM DD, YYYY [a] hh:mm:ss a')
-currentDay.text(currentTime)
-};
+  // Show time on top of page and using setInterval() to show the seconds
+  function showTime() {
+      let currentTime = dayjs().format('MMM DD, YYYY [a] hh:mm:ss a');
+      currentDay.text(currentTime);
+  }
 
-setInterval(function(){
-  showTime()
-}, 1000)
+  setInterval(function() {
+      showTime();
+  }, 1000);
+
+  function saveEvent(timeBlockId) {
+      const inputArea = $(`#${timeBlockId}`).find('.description');
+      const inputValue = inputArea.val();
+
+      if (inputValue.trim() !== '') {
+          const savedData = JSON.parse(localStorage.getItem('savedData')) || {};
+
+          savedData[timeBlockId] = inputValue;
+
+          localStorage.setItem('savedData', JSON.stringify(savedData));
+      }
+  }
+
+  // Load saved data from local storage and populate textareas
+  function loadSavedData() {
+      const savedData = JSON.parse(localStorage.getItem('savedData'));
+
+      if (savedData) {
+          timeBlocks.each(function() {
+              const timeBlockId = $(this).attr('id');
+              const inputArea = $(this).find('.description');
+
+              if (savedData[timeBlockId]) {
+                  inputArea.val(savedData[timeBlockId]);
+              }
+          });
+      }
+  }
+
+  showTime();
+
+  // Bind click events to save buttons
+  timeBlocks.each(function() {
+      const saveBtn = $(this).find('.saveBtn');
+      const timeBlockId = $(this).attr('id');
+
+      saveBtn.on('click', function() {
+          saveEvent(timeBlockId);
+      });
+  });
+
+  // Load saved data when the page loads
+  loadSavedData();
+});
 
 
 
 
-
-  // TODO: Add a listener for click events on the save button. This code should
+ // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
   // function? How can DOM traversal be used to get the "hour-x" id of the
@@ -35,6 +81,3 @@ setInterval(function(){
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
-
-
-showTime()

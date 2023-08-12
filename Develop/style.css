@@ -56,4 +56,17 @@ textarea {
 .saveBtn i:hover {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
+  
+}
+
+.past {
+  background-color: #d3d3d3; /* Gray color for past */
+}
+
+.present {
+  background-color: #ff6961; /* Red color for present */
+}
+
+.future {
+  background-color: #77dd77; /* Green color for future */
 }
